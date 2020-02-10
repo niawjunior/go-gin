@@ -10,7 +10,6 @@ type Users struct {
 }
 
 type UsersData struct {
-	Id int `json:"id"`
 	Name string `json:"name"`
-	Age string `json:"age"`
+	Age  int    `json:"age"`
 }
