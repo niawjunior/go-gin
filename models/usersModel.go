@@ -10,6 +10,6 @@ type Users struct {
 }
 
 type UsersData struct {
-	Name string `json:"name"`
+	Name string `form:"name" json:"name" sql:"not null" binding:"required"`
 	Age  int    `json:"age"`
 }
