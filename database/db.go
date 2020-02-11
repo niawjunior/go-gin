@@ -30,7 +30,7 @@ func Init() {
 	conn, err := gorm.Open("postgres", dbUri)
 
 	if err != nil {
-		fmt.Print(err)
+		fmt.Println(err)
 	}
 
 	db = conn
@@ -39,8 +39,4 @@ func Init() {
 
 func GetDB() *gorm.DB {
 	return db
-}
-
-func CloseDB() {
-	db.Close()
 }
