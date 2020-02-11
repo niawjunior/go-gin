@@ -44,3 +44,15 @@ func UpdateUser(c *gin.Context) {
 	c.JSON(http.StatusOK, &user)
 
 }
+
+func DeleteUser(c *gin.Context) {
+	id := c.Param("id")
+	var user models.Users
+	db := database.GetDB()
+
+	if err := db.Where("id = ?", id).First(&user).Error; err != nil {
+		c.AbortWithStatus(http.StatusNotFound)
+		return
+	}
+	db.Delete(&user)
+}
