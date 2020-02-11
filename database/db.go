@@ -7,7 +7,7 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
-	"github.com/niawjunior/go-app/models"
+	"github.com/niawjunior/gin-app/models"
 )
 
 var db *gorm.DB

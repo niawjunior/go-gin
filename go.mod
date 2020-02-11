@@ -1,4 +1,4 @@
-module github.com/niawjunior/go-app
+module github.com/niawjunior/gin-app
 
 go 1.12
 
