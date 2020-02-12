@@ -9,7 +9,7 @@ type ResponseData struct {
 	Data   interface{}
 }
 
-func RespondJSON(w *gin.Context, status int, payload interface{}) {
+func JSON(w *gin.Context, status int, payload interface{}) {
 	var res ResponseData
 
 	res.Status = status
