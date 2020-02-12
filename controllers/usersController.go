@@ -1,66 +1,67 @@
 package controllers
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
-	"github.com/niawjunior/gin-app/database"
+	"github.com/niawjunior/gin-app/helpers"
 	"github.com/niawjunior/gin-app/models"
+	"github.com/niawjunior/gin-app/schema"
 )
 
 func GetAllUsers(c *gin.Context) {
-	var users []models.Users
-	db := database.GetDB()
-	db.Find(&users)
-	c.JSON(http.StatusOK, users)
+	var users []schema.Users
+	err := models.GetAllUsers(&users)
+	if err != nil {
+		ApiHelpers.RespondJSON(c, 404, users)
+	} else {
+		ApiHelpers.RespondJSON(c, 200, users)
+	}
 }
 
-func GetUserById(c *gin.Context) {
+func GetUserById(user *schema.Users, id string) (err error) {
 	id := c.Param("id")
-	var user models.Users
-	db := database.GetDB()
-
-	if err := db.Where("id = ?", id).First(&user).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+	var user schema.Users
+	err := models.GetUserById(&user, id)
+	if err != nil {
+		ApiHelpers.RespondJSON(c, 404, user)
 	} else {
-		c.JSON(http.StatusOK, user)
+		ApiHelpers.RespondJSON(c, 200, user)
 	}
 }
 
 func AddUser(c *gin.Context) {
-	var user models.Users
-	var db = database.GetDB()
-
-	if err := c.BindJSON(&user); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	var user schema.Users
+	c.BindJSON(&user)
+	err := models.AddUser(&user)
+	if err != nil {
+		ApiHelpers.RespondJSON(c, 404, user)
 	} else {
-		db.Create(&user)
-		c.JSON(http.StatusCreated, &user)
+		ApiHelpers.RespondJSON(c, 200, user)
 	}
 }
 
 func UpdateUser(c *gin.Context) {
+	var user schema.Users
 	id := c.Param("id")
-	var user models.Users
-	var db = database.GetDB()
+	err := models.GetUserById((&user, id))
+	if err != nil {
+		ApiHelpers.RespondJSON(c, 404, user)
+	}
 	c.BindJSON(&user)
-
-	if err := db.Where("id = ?", id).First(&user).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+	err = models.UpdateUser(&user, id)
+	if err != nil {
+		ApiHelpers.RespondJSON(c, 404, user)
 	} else {
-		db.Save(&user)
-		c.JSON(http.StatusOK, &user)
+		ApiHelpers.RespondJSON(c, 200, user)
 	}
 }
 
 func DeleteUser(c *gin.Context) {
+	var user Models.Book
 	id := c.Param("id")
-	var user models.Users
-	db := database.GetDB()
-
-	if err := db.Where("id = ?", id).First(&user).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+	err := models.DeleteUser(&user, id)
+	if err != nil {
+		ApiHelpers.RespondJSON(c, 404, user)
 	} else {
-		db.Delete(&user)
+		ApiHelpers.RespondJSON(c, 200, user)
 	}
 }

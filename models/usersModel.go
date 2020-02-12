@@ -1,15 +1,43 @@
 package models
 
 import (
-	"github.com/jinzhu/gorm"
+	"github.com/niawjunior/gin-app/database"
+	"github.com/niawjunior/gin-app/schema"
 )
 
-type Users struct {
-	gorm.Model
-	UsersData
+func GetAllUsers(users *[]schema.Users) (err error) {
+	db := database.GetDB()
+	if err = db..Find(users).Error; err != nil {
+		return err
+	}
+	return nil
 }
 
-type UsersData struct {
-	Name string `json:"name" sql:"not null" binding:"required"`
-	Age  int    `json:"age"`
+func GetUserById(user *schema.Users, id string) (err error) {
+	db := database.GetDB()
+	if err := db.Where("id = ?", id).First(user).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
+func AddUser(user *schema.Users) (err error) {
+	db := database.GetDB()
+	if err = db.Create(user).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
+func UpdateUser(user *schema.Users, id string) (err error) {
+	db := database.GetDB()
+	db.Save(user)
+	return nil
+}
+
+
+func DeleteUser(user *schema.Users, id string) (err error) {
+	db := database.GetDB()
+	db.Where("id = ?", id).Delete(user)
+	return nil
 }

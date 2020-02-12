@@ -2,7 +2,7 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/niawjunior/gin-app/controllers"
+	"github.com/niawjunior/go-gin/controllers"
 )
 
 func Router() *gin.Engine {

@@ -3,13 +3,22 @@ package main
 import (
 	"log"
 
-	db "github.com/niawjunior/gin-app/database"
-	"github.com/niawjunior/gin-app/routers"
+	db "github.com/niawjunior/go-gin/database"
+	"github.com/niawjunior/go-gin/routers"
 )
 
 func main() {
 	log.Println("Starting server..")
+
 	db.Init()
+	defer db.CloseDB()
+
 	r := routers.Router()
-	r.Run(":3001")
+
+	err := r.Run(":3001")
+
+	if err != nil {
+		panic(err)
+	}
+
 }

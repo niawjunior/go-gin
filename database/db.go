@@ -7,13 +7,14 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
-	"github.com/niawjunior/gin-app/models"
+	"github.com/niawjunior/gin-app/types"
 )
 
 var db *gorm.DB
 
 func Init() {
 	e := godotenv.Load()
+
 	if e != nil {
 		fmt.Print(e)
 	}
@@ -27,16 +28,20 @@ func Init() {
 
 	fmt.Println(dbUri)
 
-	conn, err := gorm.Open("postgres", dbUri)
+	connect, err := gorm.Open("postgres", dbUri)
 
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	db = conn
-	db.Debug().AutoMigrate(&models.Users{})
+	db = connect
+	db.Debug().AutoMigrate(&types.Users{})
 }
 
 func GetDB() *gorm.DB {
 	return db
+}
+
+func CloseDB() {
+	db.Close()
 }
