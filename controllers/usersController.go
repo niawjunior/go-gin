@@ -62,7 +62,7 @@ func DeleteUser(c *gin.Context) {
 	id := c.Param("id")
 	err := models.DeleteUser(&user, id)
 	if err != nil {
-		helpers.JSON(c, http.StatusNotFound, user)
+		helpers.JSON(c, http.StatusNotFound, [])
 	} else {
 		helpers.JSON(c, http.StatusOK, user)
 	}
