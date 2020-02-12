@@ -10,7 +10,7 @@ import (
 	"github.com/niawjunior/go-gin/schema"
 )
 
-var db *gorm.DB
+var DB *gorm.DB
 
 func Init() {
 	e := godotenv.Load()
@@ -34,14 +34,6 @@ func Init() {
 		fmt.Println(err)
 	}
 
-	db = connect
-	db.Debug().AutoMigrate(&schema.Users{})
-}
-
-func GetDB() *gorm.DB {
-	return db
-}
-
-func CloseDB() {
-	db.Close()
+	DB = connect
+	DB.Debug().AutoMigrate(&schema.Users{})
 }

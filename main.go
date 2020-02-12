@@ -3,15 +3,15 @@ package main
 import (
 	"log"
 
-	db "github.com/niawjunior/go-gin/database"
+	database "github.com/niawjunior/go-gin/database"
 	"github.com/niawjunior/go-gin/routers"
 )
 
 func main() {
 	log.Println("Starting server..")
 
-	db.Init()
-	defer db.CloseDB()
+	database.Init()
+	defer database.DB.Close()
 
 	r := routers.Router()
 
