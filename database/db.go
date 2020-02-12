@@ -7,7 +7,7 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
-	"github.com/niawjunior/gin-app/types"
+	"github.com/niawjunior/go-gin/schema"
 )
 
 var db *gorm.DB
@@ -35,7 +35,7 @@ func Init() {
 	}
 
 	db = connect
-	db.Debug().AutoMigrate(&types.Users{})
+	db.Debug().AutoMigrate(&schema.Users{})
 }
 
 func GetDB() *gorm.DB {
